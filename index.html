@@ -15,7 +15,7 @@
 
     <script type="text/javascript">
         var weatherKey = "61f56f48135eb5c36c6c42128d4c142f"
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=32812,us&appid=" + weatherKey;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=32812,us&units=imperial&appid=" + weatherKey;
 
         $.ajax({
             url: queryURL,
@@ -23,8 +23,28 @@
         }).then(function (response) {
             console.log(response);
             console.log(response.name);
+            var temp = Math.floor(response.main.temp);
+
+            console.log(temp);
+            var weather = "The temperature in " + response.name + " is " + temp + " degrees. "
+            console.log(weather);
+            yodaWeather(weather);
         });
 
+        function yodaWeather(str) {
+            $.ajax({
+                url: "https://yodish.p.rapidapi.com/yoda.json?text=" + str,
+                method: "POST",
+                headers: {
+                    'X-RapidAPI-Host': 'yodish.p.rapidapi.com',
+                    'X-RapidAPI-Key': 'b934865617msh6be005960065510p1fe236jsne8cf611a2387'
+                },
+
+            }).then(function(response) {
+                console.log(response);
+            })
+
+        }
     </script>
 </body>
 
